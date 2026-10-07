@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coding Oasis — Toko Digital Game &amp; Item Fisch Roblox</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            oasis: {
+              navy: '#0A192F',
+              card: '#0D233A',
+              cyan: '#00A8E8',
+              gold: '#FFB703',
+            }
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0A192F;
+      color: #F0F9FF;
+    }
+    .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+    .tabular-nums {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-b from-[#0A192F] via-[#0D233A] to-[#0A192F] text-[#F0F9FF]">
+
+  <!-- ==================== HEADER / NAVBAR ==================== -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-[#0A192F]/95 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+      <!-- Gambar 1: Logo Toko -->
+      <a href="#" onclick="showStep1Catalog(); return false;" class="flex items-center gap-3">
+        <div class="h-11 w-11 shrink-0 overflow-hidden rounded-full border-2 border-[#00A8E8] bg-[#0D233A] shadow-md">
+          <img
+            id="navbar-logo"
+            src="logo.png"
+            alt="Coding Oasis Logo"
+            onerror="this.onerror=null; this.src=FALLBACK_LOGO_URI;"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <span class="font-display text-lg font-extrabold tracking-tight text-white sm:text-xl whitespace-nowrap">
+          Coding Oasis
+        </span>
+      </a>
+
+      <!-- Search Bar Tengah -->
+      <div class="flex flex-1 items-center justify-center gap-6 max-w-2xl">
+        <div class="relative w-full max-w-md">
+          <i class="fa-solid fa-magnifying-glass pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+          <input
+            id="global-search"
+            type="search"
+            oninput="handleGlobalSearch(this.value)"
+            placeholder="Cari Game atau Layanan..."
+            class="w-full rounded-xl border border-white/15 bg-[#0D233A] py-2 pl-9 pr-4 text-xs sm:text-sm text-white placeholder-slate-400 focus:border-[#00A8E8] focus:outline-none"
+          />
+        </div>
+
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+          <a href="#" onclick="showStep1Catalog(); return false;" class="hover:text-[#00A8E8] transition-colors whitespace-nowrap">Home</a>
+          <a href="#katalog-game" onclick="showStep1Catalog();" class="hover:text-[#00A8E8] transition-colors whitespace-nowrap">Katalog</a>
+          <a href="#footer-contact" class="hover:text-[#FFB703] transition-colors whitespace-nowrap">Kontak Admin</a>
+        </nav>
+      </div>
+
+      <!-- Tombol Masuk / Daftar -->
+      <div class="flex items-center gap-3">
+        <button
+          id="auth-btn"
+          type="button"
+          onclick="openLoginModal()"
+          class="rounded-xl bg-[#FFB703] px-4 py-2 text-xs sm:text-sm font-bold text-[#0A192F] shadow-sm transition-colors hover:bg-[#ffca3a] whitespace-nowrap"
+        >
+          <i class="fa-regular fa-user mr-1.5"></i>
+          <span id="auth-btn-text">Masuk / Daftar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+
+    <!-- ==========================================================
+         STEP 1: HALAMAN UTAMA (PILIH GAME SAJA)
+         ========================================================== -->
+    <div id="step-1-view" class="space-y-10">
+
+      <!-- Hero Banner Promo -->
+      <section class="relative overflow-hidden rounded-2xl border border-[#00A8E8]/30 bg-gradient-to-r from-[#0A192F] via-[#0D233A] to-[#005082] p-6 sm:p-10 shadow-2xl">
+        <div class="relative z-10 max-w-2xl space-y-3">
+          <p class="text-xs font-semibold tracking-wider text-[#FFB703] uppercase">
+            <i class="fa-solid fa-umbrella-beach mr-1.5"></i>Dermaga Digital Game &amp; Item Fisch Roblox
+          </p>
+          <h1 class="font-display text-2xl font-extrabold leading-tight text-white sm:text-4xl">
+            Top Up Game &amp; Belanja 42 Item Fisch Roblox Mulai Rp 100
+          </h1>
+          <p class="text-xs sm:text-sm leading-relaxed text-slate-200">
+            Pilih game favoritmu di bawah ini, tentukan item atau nominal top up, dan selesaikan pembayaran secara instan menggunakan satu kode QRIS resmi Coding Oasis.
+          </p>
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onclick="selectGame('fisch-roblox')"
+              class="rounded-xl bg-[#FFB703] px-5 py-2.5 text-xs sm:text-sm font-bold text-[#0A192F] shadow-md hover:bg-[#ffca3a] transition-colors"
+            >
+              <i class="fa-solid fa-fish-fins mr-1.5"></i>Beli Item Fisch Roblox
+            </button>
+            <a
+              href="#katalog-game"
+              class="rounded-xl border border-[#00A8E8]/50 bg-[#0A192F]/70 px-4 py-2.5 text-xs sm:text-sm font-semibold text-[#00A8E8] hover:bg-[#00A8E8]/15 transition-colors"
+            >
+              Lihat Semua Game
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Filter Kategori -->
+      <section id="katalog-game" class="space-y-6">
+        <div class="flex flex-col justify-between gap-4 border-b border-white/10 pb-4 sm:flex-row sm:items-end">
+          <div>
+            <p class="text-xs font-semibold text-[#00A8E8]">Step 1 · Pilih Layanan Game</p>
+            <h2 class="mt-1 font-display text-xl font-bold text-white sm:text-2xl">
+              Katalog Game Coding Oasis
+            </h2>
+          </div>
+
+          <div id="category-tabs" class="flex items-center gap-1.5 overflow-x-auto rounded-xl border border-white/10 bg-[#0D233A] p-1.5">
+            <button type="button" onclick="setCategoryFilter('all')" data-cat="all" class="cat-tab rounded-lg bg-[#00A8E8] px-3.5 py-2 text-xs font-bold text-[#0A192F] whitespace-nowrap">Semua Game</button>
+            <button type="button" onclick="setCategoryFilter('Top Up Game')" data-cat="Top Up Game" class="cat-tab rounded-lg px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white whitespace-nowrap">Top Up Game</button>
+            <button type="button" onclick="setCategoryFilter('Item Roblox')" data-cat="Item Roblox" class="cat-tab rounded-lg px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white whitespace-nowrap">Item Game (Roblox)</button>
+          </div>
+        </div>
+
+        <!-- Grid Kartu Game (Opsi Item/Harga belum muncul di sini) -->
+        <div id="games-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+          <!-- Dirender secara dinamis oleh Vanilla JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================
+         STEP 2: HALAMAN DETAIL GAME & OPSI ITEM
+         ========================================================== -->
+    <div id="step-2-view" class="hidden space-y-6">
+
+      <!-- Bar Navigasi Kembali -->
+      <div class="flex flex-col justify-between gap-4 rounded-2xl border border-white/10 bg-[#0D233A] p-4 sm:flex-row sm:items-center sm:px-6">
+        <button
+          type="button"
+          onclick="showStep1Catalog()"
+          class="flex items-center gap-2 self-start rounded-xl border border-[#00A8E8]/40 bg-[#0A192F] px-4 py-2 text-xs font-bold text-[#00A8E8] hover:bg-[#00A8E8]/15 transition-colors"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Kembali ke Daftar Game</span>
+        </button>
+
+        <div class="flex items-center gap-2 text-xs text-slate-400">
+          <span>1. Pilih Game</span>
+          <span>&rarr;</span>
+          <span class="font-bold text-[#FFB703]">2. Pilih Item &amp; Isi Akun</span>
+          <span>&rarr;</span>
+          <span>3. Bayar QRIS</span>
+          <span>&rarr;</span>
+          <span>4. Chat Admin</span>
+        </div>
+      </div>
+
+      <!-- Info Header Game yang Dipilih -->
+      <div class="flex flex-col justify-between gap-4 rounded-2xl border border-[#00A8E8]/30 bg-[#0D233A]/90 p-5 sm:flex-row sm:items-center sm:p-6">
+        <div class="flex items-center gap-4">
+          <div id="detail-game-icon" class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#00A8E8]/40 bg-[#0A192F] text-2xl text-[#00A8E8]">
+          </div>
+          <div>
+            <p id="detail-game-category" class="text-xs font-semibold text-[#00A8E8]"></p>
+            <h1 id="detail-game-title" class="mt-0.5 font-display text-2xl font-extrabold text-white sm:text-3xl"></h1>
+            <p id="detail-game-guide" class="mt-1 text-xs text-slate-300"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout 2 Kolom: Kiri (Input Akun + Grid Item), Kanan (Metode QRIS + Total + Bayar Sekarang) -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+
+        <!-- KOLOM KIRI (8 Kolom) -->
+        <div class="space-y-6 lg:col-span-8">
+
+          <!-- 1. Form Input User ID / Server ID / Username Game -->
+          <div class="rounded-2xl border border-white/10 bg-[#0D233A] p-5 sm:p-6">
+            <h2 class="font-display text-lg font-bold text-white">
+              1. Masukkan Data Akun Game
+            </h2>
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div id="userid-wrapper" class="sm:col-span-2">
+                <label id="userid-label" class="mb-1.5 block text-xs font-medium text-slate-300">
+                  User ID / Username Game <span class="text-[#FFB703]">*</span>
+                </label>
+                <input
+                  id="input-userid"
+                  type="text"
+                  placeholder="Masukkan Username atau User ID..."
+                  class="w-full rounded-xl border border-white/15 bg-[#0A192F] px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-[#00A8E8] focus:outline-none"
+                />
+              </div>
+
+              <div id="serverid-wrapper" class="hidden">
+                <label class="mb-1.5 block text-xs font-medium text-slate-300">
+                  Server / Zone ID <span class="text-[#FFB703]">*</span>
+                </label>
+                <input
+                  id="input-serverid"
+                  type="text"
+                  placeholder="Contoh: 1234"
+                  class="w-full rounded-xl border border-white/15 bg-[#0A192F] px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-[#00A8E8] focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Grid Pilihan Item / Nominal Top Up -->
+          <div class="rounded-2xl border border-white/10 bg-[#0D233A] p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+              <div>
+                <h2 class="font-display text-lg font-bold text-white">
+                  2. Pilih Item atau Nominal (<span id="items-count">0</span> Pilihan)
+                </h2>
+                <p class="text-xs text-slate-400">Klik pada salah satu kartu item untuk memilih.</p>
+              </div>
+
+              <!-- Pencarian Item di Dalam Game -->
+              <div class="relative w-full sm:w-60">
+                <i class="fa-solid fa-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                <input
+                  id="item-search-input"
+                  type="search"
+                  oninput="renderGameItems()"
+                  placeholder="Cari nama item..."
+                  class="w-full rounded-xl border border-white/15 bg-[#0A192F] py-2 pl-8 pr-3 text-xs text-white placeholder-slate-400 focus:border-[#00A8E8] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Grid Kartu Item -->
+            <div id="items-grid" class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 max-h-[540px] overflow-y-auto pr-1">
+              <!-- Dirender secara dinamis oleh Vanilla JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- KOLOM KANAN (4 Kolom): Metode QRIS & Ringkasan Pembayaran -->
+        <div class="lg:col-span-4">
+          <div class="sticky top-24 space-y-5 rounded-2xl border border-[#00A8E8]/30 bg-[#0D233A] p-5 sm:p-6 shadow-2xl">
+            <div>
+              <h2 class="font-display text-base font-bold text-white">
+                3. Metode Pembayaran
+              </h2>
+              <div class="mt-3 rounded-xl border-2 border-[#00A8E8] bg-[#0A192F] p-3.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#00A8E8]/15 text-[#00A8E8]">
+                      <i class="fa-solid fa-qrcode text-lg"></i>
+                    </div>
+                    <div>
+                      <p class="font-display text-sm font-bold text-white">QRIS (Semua E-Wallet &amp; Bank)</p>
+                      <p class="text-[11px] text-slate-400">GoPay · DANA · OVO · ShopeePay · M-Banking</p>
+                    </div>
+                  </div>
+                  <span class="text-xs font-bold text-[#00A8E8]">Aktif</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pengatur Jumlah Beli -->
+            <div class="flex items-center justify-between border-y border-white/10 py-3.5">
+              <div>
+                <p class="text-xs font-medium text-slate-300">Jumlah Pembelian</p>
+                <p id="summary-item-name" class="text-xs font-bold text-[#00A8E8] truncate max-w-[160px]">-</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="changeQuantity(-1)" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-[#0A192F] text-white hover:border-[#00A8E8]">-</button>
+                <span id="summary-qty" class="w-8 text-center tabular-nums text-sm font-bold text-white">1</span>
+                <button type="button" onclick="changeQuantity(1)" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-[#0A192F] text-white hover:border-[#00A8E8]">+</button>
+              </div>
+            </div>
+
+            <!-- Ringkasan Harga -->
+            <div class="space-y-2 rounded-xl bg-[#0A192F] p-4 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Game</span>
+                <span id="summary-game-title" class="font-semibold text-white">-</span>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Harga Satuan</span>
+                <span id="summary-unit-price" class="tabular-nums">Rp 0</span>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Biaya Layanan QRIS</span>
+                <span class="font-semibold text-emerald-400">Gratis (Rp 0)</span>
+              </div>
+              <div class="flex items-baseline justify-between border-t border-white/10 pt-2.5">
+                <span class="font-semibold text-white">Total Tagihan</span>
+                <span id="summary-total-price" class="tabular-nums text-lg font-extrabold text-[#FFB703]">Rp 0</span>
+              </div>
+            </div>
+
+            <p id="checkout-error" class="hidden rounded-xl border border-rose-500/40 bg-rose-500/10 px-3.5 py-2.5 text-xs font-medium text-rose-300"></p>
+
+            <!-- Tombol Bayar Sekarang (Memicu STEP 3) -->
+            <button
+              type="button"
+              onclick="openStep3QrisModal()"
+              class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FFB703] px-5 py-3.5 text-sm font-extrabold text-[#0A192F] shadow-lg transition-transform hover:bg-[#ffca3a] active:scale-[0.99]"
+            >
+              <i class="fa-solid fa-wallet"></i>
+              <span>Bayar Sekarang</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer id="footer-contact" class="border-t border-white/10 bg-[#071120] py-10 text-slate-400 mt-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+        <div class="flex items-center gap-3">
+          <div class="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-[#00A8E8] bg-[#0D233A]">
+            <img
+              src="logo.png"
+              alt="Coding Oasis Logo"
+              onerror="this.onerror=null; this.src=FALLBACK_LOGO_URI;"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div>
+            <span class="font-display text-lg font-extrabold text-white">Coding Oasis</span>
+            <p class="text-xs text-slate-400">Toko Digital Game &amp; Spesialis Item Fisch Roblox</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.instagram.com/coding_oasis_gs?stkn=N3JmdTY1N3BwMnF6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-xl border border-[#00A8E8]/40 bg-[#0D233A] px-4 py-2.5 text-xs font-semibold text-white hover:border-[#00A8E8] hover:text-[#00A8E8]"
+          >
+            <i class="fa-brands fa-instagram text-sm"></i>
+            <span>Instagram (@coding_oasis_gs)</span>
+          </a>
+          <a
+            href="https://www.tiktok.com/@oasis.store.fisch"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-xl border border-[#FFB703]/40 bg-[#0D233A] px-4 py-2.5 text-xs font-semibold text-white hover:border-[#FFB703] hover:text-[#FFB703]"
+          >
+            <i class="fa-brands fa-tiktok text-sm"></i>
+            <span>TikTok (@oasis.store.fisch)</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 border-t border-white/10 pt-6 text-center text-xs text-slate-500">
+        &copy; 2026 Coding Oasis Store. Seluruh hak cipta dilindungi.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================
+       MODAL STEP 3 (PEMBAYARAN QRIS) & STEP 4 (CHAT ADMIN)
+       ========================================================== -->
+  <div id="qris-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-[#050D1A]/85 p-4 backdrop-blur-sm">
+    <div class="relative max-h-[92vh] w-full max-w-md overflow-y-auto rounded-2xl border border-[#00A8E8]/30 bg-[#0D233A] p-6 text-[#F0F9FF] shadow-2xl">
+      <!-- Header Modal -->
+      <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <p id="modal-step-badge" class="text-xs font-semibold text-[#00A8E8]">Step 3 · Pembayaran QRIS</p>
+          <h3 id="modal-title" class="mt-1 font-display text-xl font-bold text-white">Scan QRIS Coding Oasis</h3>
+        </div>
+        <button type="button" onclick="closeQrisModal()" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-[#0A192F] text-slate-300 hover:text-white">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- ISI STEP 3: TAMPILAN QRIS & TIMER -->
+      <div id="modal-step-3-content" class="mt-5 space-y-4">
+        <div class="flex items-center justify-between rounded-xl border border-[#FFB703]/30 bg-[#0A192F] px-4 py-3">
+          <div>
+            <p class="text-xs text-slate-400">Total Tagihan</p>
+            <p id="modal-total-amount" class="tabular-nums text-lg font-extrabold text-[#FFB703]">Rp 0</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-slate-400">Batas Waktu</p>
+            <p class="tabular-nums text-base font-bold text-[#00A8E8]">
+              <i class="fa-regular fa-clock mr-1 text-[#FFB703]"></i><span id="qris-timer">15:00</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Gambar 2: QRIS Pembayaran -->
+        <div class="mx-auto max-w-xs overflow-hidden rounded-xl border border-white/20 bg-white p-2.5 shadow-lg">
+          <img
+            id="qris-image"
+            src="qris.png"
+            alt="QRIS Coding Oasis"
+            onerror="this.onerror=null; this.src=FALLBACK_QRIS_URI;"
+            class="h-auto w-full rounded-lg object-contain"
+          />
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-[#0A192F]/80 p-3.5 text-xs space-y-1">
+          <div class="flex justify-between">
+            <span class="text-slate-400">No. Invoice</span>
+            <span id="modal-invoice-id" class="tabular-nums font-bold text-white">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Item</span>
+            <span id="modal-item-summary" class="font-semibold text-[#00A8E8]">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">User ID / Username</span>
+            <span id="modal-userid-summary" class="tabular-nums font-semibold text-white">-</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onclick="showStep4Confirmation()"
+          class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FFB703] px-5 py-3.5 text-sm font-extrabold text-[#0A192F] hover:bg-[#ffca3a] transition-colors"
+        >
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Saya Sudah Bayar</span>
+        </button>
+      </div>
+
+      <!-- ISI STEP 4: KONFIRMASI & CHAT ADMIN -->
+      <div id="modal-step-4-content" class="mt-5 hidden space-y-5">
+        <div class="rounded-xl border border-emerald-400/40 bg-[#0A192F] p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/15 text-emerald-400">
+              <i class="fa-solid fa-check-double"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-emerald-400">Status: Pesanan Diproses</p>
+              <p class="mt-1 text-sm font-bold text-white">Konfirmasi Pembayaran ke Admin</p>
+              <p class="mt-1 text-xs leading-relaxed text-slate-300">
+                Silakan klik salah satu tombol di bawah ini untuk mengirim bukti pembayaran QRIS dan nomor invoice kepada Admin Coding Oasis.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <a
+            href="https://www.instagram.com/coding_oasis_gs?stkn=N3JmdTY1N3BwMnF6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex w-full items-center justify-between rounded-xl bg-gradient-to-r from-[#00A8E8] to-[#0088CC] px-4 py-3.5 text-sm font-bold text-[#0A192F] shadow-md hover:brightness-110"
+          >
+            <span><i class="fa-brands fa-instagram mr-2"></i>Chat Admin Instagram</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+
+          <a
+            href="https://www.tiktok.com/@oasis.store.fisch"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex w-full items-center justify-between rounded-xl border border-[#FFB703]/60 bg-[#0A192F] px-4 py-3.5 text-sm font-bold text-[#FFB703] hover:bg-[#FFB703]/10"
+          >
+            <span><i class="fa-brands fa-tiktok mr-2"></i>Chat Admin TikTok</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <button
+          type="button"
+          onclick="closeQrisModal()"
+          class="w-full rounded-xl border border-white/10 py-2.5 text-xs font-semibold text-slate-400 hover:text-white"
+        >
+          Tutup Jendela
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       MODAL LOGIN / DAFTAR
+       ========================================================== -->
+  <div id="login-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-[#050D1A]/85 p-4 backdrop-blur-sm">
+    <div class="relative w-full max-w-md rounded-2xl border border-[#00A8E8]/30 bg-[#0D233A] p-6 text-[#F0F9FF] shadow-2xl">
+      <button type="button" onclick="closeLoginModal()" class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-[#0A192F] text-slate-300 hover:text-white">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="h-11 w-11 shrink-0 overflow-hidden rounded-full border-2 border-[#00A8E8] bg-[#0A192F]">
+          <img
+            src="logo.png"
+            alt="Coding Oasis Logo"
+            onerror="this.onerror=null; this.src=FALLBACK_LOGO_URI;"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div>
+          <p class="text-xs text-[#00A8E8]">Member Coding Oasis</p>
+          <h3 class="font-display text-xl font-bold text-white">Masuk / Daftar Akun</h3>
+        </div>
+      </div>
+
+      <form onsubmit="handleLoginSubmit(event)" class="mt-5 space-y-4">
+        <div>
+          <label class="mb-1.5 block text-xs font-medium text-slate-300">Username atau Email</label>
+          <input
+            id="login-username"
+            type="text"
+            required
+            placeholder="Contoh: OasisAngler"
+            class="w-full rounded-xl border border-white/15 bg-[#0A192F] px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-[#00A8E8] focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="mb-1.5 block text-xs font-medium text-slate-300">Password</label>
+          <input
+            id="login-password"
+            type="password"
+            required
+            placeholder="Masukkan password..."
+            class="w-full rounded-xl border border-white/15 bg-[#0A192F] px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-[#00A8E8] focus:outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full rounded-xl bg-[#FFB703] py-3 text-sm font-extrabold text-[#0A192F] hover:bg-[#ffca3a]"
+        >
+          Masuk Sekarang
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== VANILLA JAVASCRIPT ==================== -->
+  <script>
+    // Fallback SVG Data URI jika file lokal logo.png atau qris.png belum ditaruh di folder yang sama
+    const FALLBACK_LOGO_URI = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="#0A192F" stroke="#00A8E8" stroke-width="8"/><circle cx="100" cy="78" r="32" fill="#FFB703"/><path d="M55 105 Q100 85 145 105" fill="#FDE047"/><path d="M30 112 Q100 100 170 112" stroke="#00A8E8" stroke-width="10" fill="none"/><text x="100" y="148" text-anchor="middle" font-family="Arial Black" font-size="34" fill="#FFFFFF">OASIS</text><text x="100" y="172" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="20" fill="#FFB703">Store</text></svg>`);
+
+    const FALLBACK_QRIS_URI = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 460"><rect width="360" height="460" fill="#FFFFFF"/><polygon points="0,90 75,150 0,230" fill="#E11D2E"/><polygon points="180,460 360,310 360,460" fill="#E11D2E"/><text x="24" y="42" font-family="Arial Black" font-size="24" fill="#111827">QRIS</text><text x="310" y="42" font-family="Arial Black" font-size="18" fill="#0F3D6E">GPN</text><text x="180" y="88" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="22" fill="#111827">OASIS Store</text><text x="180" y="114" text-anchor="middle" font-family="Arial" font-size="14" fill="#1F2937">NMID : ID1026596036610</text><text x="180" y="136" text-anchor="middle" font-family="Arial" font-size="14" fill="#1F2937">A01</text><rect x="80" y="150" width="200" height="200" fill="#FFFFFF" stroke="#111827" stroke-width="4"/><rect x="92" y="162" width="44" height="44" fill="none" stroke="#111827" stroke-width="6"/><rect x="104" y="174" width="20" height="20" fill="#111827"/><rect x="224" y="162" width="44" height="44" fill="none" stroke="#111827" stroke-width="6"/><rect x="236" y="174" width="20" height="20" fill="#111827"/><rect x="92" y="294" width="44" height="44" fill="none" stroke="#111827" stroke-width="6"/><rect x="104" y="306" width="20" height="20" fill="#111827"/><rect x="152" y="220" width="56" height="56" fill="#111827"/><text x="180" y="382" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14" fill="#1F2937">SATU QRIS UNTUK SEMUA</text><text x="20" y="438" font-family="Arial" font-size="11" fill="#111827">Dicetak oleh: 93600915</text></svg>`);
+
+    // 42 Daftar Item & Harga Resmi "Fisch (Roblox)"
+    const FISCH_ITEMS = [
+      { name: "Salty sardines", price: 10000 },
+      { name: "Fishcake snack", price: 10000 },
+      { name: "Empyrean relic", price: 1500 },
+      { name: "Lantern Coffin", price: 5000 },
+      { name: "Sovereign relic", price: 200 },
+      { name: "Etherium", price: 5000 },
+      { name: "Chromatic noiseform", price: 8000 },
+      { name: "Ecosync", price: 12000 },
+      { name: "Sleepy bear", price: 12000 },
+      { name: "Cosmic relic", price: 100 },
+      { name: "Twisted relic", price: 100 },
+      { name: "Admin relic", price: 1000 },
+      { name: "Archangelite", price: 80000 },
+      { name: "Fierce sushi", price: 10000 },
+      { name: "Triple fish staff", price: 20000 },
+      { name: "Luxcutter", price: 10000 },
+      { name: "Exclamatorius", price: 5000 },
+      { name: "Lemeownade", price: 5000 },
+      { name: "uLemon", price: 10000 },
+      { name: "Lunar lullaby", price: 10000 },
+      { name: "Coquette", price: 20000 },
+      { name: "Lantern Pebble", price: 5000 },
+      { name: "Shrimply Delicious", price: 8000 },
+      { name: "Meanie Dog", price: 8000 },
+      { name: "Nameless illuminator bundle", price: 50000 },
+      { name: "SOTD relic", price: 500 },
+      { name: "Invincible relic", price: 400 },
+      { name: "Festive relic", price: 1200 },
+      { name: "Spooky relic", price: 10000 },
+      { name: "Santa relic", price: 5000 },
+      { name: "Pearsicle", price: 8000 },
+      { name: "Burgerbound", price: 5000 },
+      { name: "Angels Minigame", price: 15000 },
+      { name: "Bloom of delicacy", price: 20000 },
+      { name: "Minty fab", price: 15000 },
+      { name: "Dovepoint", price: 20000 },
+      { name: "Candy cane", price: 5000 },
+      { name: "Robochomp", price: 55000 },
+      { name: "Flipper Express", price: 5000 },
+      { name: "Red racer", price: 5000 },
+      { name: "Irish jig", price: 5000 },
+      { name: "Bat glider", price: 5000 }
+    ];
+
+    // Data Katalog Lengkap (Step 1)
+    const GAMES_DATA = [
+      {
+        id: "fisch-roblox",
+        title: "Fisch (Roblox)",
+        category: "Item Roblox",
+        publisher: "Roblox · Trade In-Game",
+        icon: "fa-fish-fins",
+        badge: "42 Item Lengkap",
+        userIdLabel: "Username Roblox (@username)",
+        userIdPlaceholder: "Contoh: @OasisAngler99",
+        needsServerId: false,
+        guide: "Masukkan Username Roblox kamu. Item dikirimkan langsung melalui Trade In-Game bersama Admin setelah pembayaran QRIS.",
+        items: FISCH_ITEMS
+      },
+      {
+        id: "aut-roblox",
+        title: "A Universal Time (Roblox)",
+        category: "Item Roblox",
+        publisher: "Roblox · Universe Time",
+        icon: "fa-stopwatch",
+        badge: "Item & Spec Ready",
+        userIdLabel: "Username Roblox (@username)",
+        userIdPlaceholder: "Contoh: @ChronoPlayer",
+        needsServerId: false,
+        guide: "Masukkan Username Roblox aktif kamu untuk pengiriman item via Trade server AUT.",
+        items: [
+          { name: "Cursed Orb", price: 15000 },
+          { name: "Dragon Ball Set (7 Bola)", price: 25000 },
+          { name: "Mythic Skin Crate (5x)", price: 30000 },
+          { name: "Chrono Warden Spec", price: 45000 },
+          { name: "Ope-Ope Fruit Item", price: 35000 }
+        ]
+      },
+      {
+        id: "steam-wallet",
+        title: "Steam Wallet",
+        category: "Top Up Game",
+        publisher: "Valve · Voucher IDR",
+        icon: "fa-brands fa-steam",
+        badge: "Kode Resmi IDR",
+        userIdLabel: "Email / Username Steam",
+        userIdPlaceholder: "Contoh: gamer@oasis.id",
+        needsServerId: false,
+        guide: "Masukkan kontak atau username kamu. Kode voucher Steam Wallet IDR diberikan via chat Admin.",
+        items: [
+          { name: "Steam Wallet IDR 12.000", price: 13500 },
+          { name: "Steam Wallet IDR 45.000", price: 49000 },
+          { name: "Steam Wallet IDR 60.000", price: 64500 },
+          { name: "Steam Wallet IDR 90.000", price: 96000 },
+          { name: "Steam Wallet IDR 120.000", price: 127500 },
+          { name: "Steam Wallet IDR 250.000", price: 264000 }
+        ]
+      },
+      {
+        id: "free-fire",
+        title: "Free Fire",
+        category: "Top Up Game",
+        publisher: "Garena",
+        icon: "fa-fire-flame-curved",
+        badge: "Proses Cepat",
+        userIdLabel: "Player ID Free Fire",
+        userIdPlaceholder: "Contoh: 987654321",
+        needsServerId: false,
+        guide: "Masukkan angka Player ID Free Fire kamu dengan benar.",
+        items: [
+          { name: "70 Diamonds", price: 9500 },
+          { name: "140 Diamonds", price: 18500 },
+          { name: "355 Diamonds", price: 46000 },
+          { name: "720 Diamonds", price: 91000 },
+          { name: "Membership Mingguan", price: 28500 }
+        ]
+      },
+      {
+        id: "mobile-legends",
+        title: "Mobile Legends",
+        category: "Top Up Game",
+        publisher: "Moonton",
+        icon: "fa-shield-halved",
+        badge: "Promo WDP",
+        userIdLabel: "User ID Mobile Legends",
+        userIdPlaceholder: "Contoh: 123456789",
+        needsServerId: true,
+        guide: "Masukkan User ID dan Zone ID (4-5 angka di dalam kurung profil MLBB).",
+        items: [
+          { name: "Weekly Diamond Pass (WDP)", price: 26500 },
+          { name: "86 Diamonds", price: 21000 },
+          { name: "172 Diamonds", price: 42000 },
+          { name: "257 Diamonds", price: 62500 },
+          { name: "514 Diamonds", price: 124000 }
+        ]
+      },
+      {
+        id: "valorant",
+        title: "Valorant",
+        category: "Top Up Game",
+        publisher: "Riot Games",
+        icon: "fa-crosshairs",
+        badge: "Region ID Resmi",
+        userIdLabel: "Riot ID + Tagline",
+        userIdPlaceholder: "Contoh: OasisPlayer#SEA",
+        needsServerId: false,
+        guide: "Masukkan Riot ID lengkap beserta tanda pagar dan Tagline.",
+        items: [
+          { name: "475 Valorant Points (VP)", price: 52000 },
+          { name: "1000 Valorant Points (VP)", price: 105000 },
+          { name: "2050 Valorant Points (VP)", price: 208000 },
+          { name: "3650 Valorant Points (VP)", price: 359000 }
+        ]
+      },
+      {
+        id: "honor-of-kings",
+        title: "Honor of Kings (HOK)",
+        category: "Top Up Game",
+        publisher: "Level Infinite",
+        icon: "fa-crown",
+        badge: "Bonus Token",
+        userIdLabel: "UID Honor of Kings",
+        userIdPlaceholder: "Contoh: 5647382910",
+        needsServerId: false,
+        guide: "Salin UID dari menu profil in-game Honor of Kings kamu.",
+        items: [
+          { name: "80 Tokens", price: 14500 },
+          { name: "240 Tokens", price: 43000 },
+          { name: "400 Tokens", price: 71500 },
+          { name: "800 Tokens", price: 142000 }
+        ]
+      },
+      {
+        id: "pubg-mobile",
+        title: "PUBG Mobile (PUBGM)",
+        category: "Top Up Game",
+        publisher: "Krafton · Level Infinite",
+        icon: "fa-helmet-safety",
+        badge: "UC Region ID",
+        userIdLabel: "Character ID PUBGM",
+        userIdPlaceholder: "Contoh: 5123456789",
+        needsServerId: false,
+        guide: "Masukkan Character ID angka yang tertera di profil PUBG Mobile.",
+        items: [
+          { name: "60 UC", price: 14000 },
+          { name: "325 UC", price: 71000 },
+          { name: "660 UC", price: 141000 },
+          { name: "1800 UC", price: 352000 }
+        ]
+      }
+    ];
+
+    // State Aplikasi
+    let currentCategory = "all";
+    let globalSearchQuery = "";
+    let activeGame = GAMES_DATA[0];
+    let selectedItemIndex = 0;
+    let quantity = 1;
+    let timerInterval = null;
+
+    function formatRupiah(num) {
+      return "Rp " + num.toLocaleString("id-ID");
+    }
+
+    // ==================== LOGIKA STEP 1: RENDER KATALOG GAME ====================
+    function renderGamesCatalog() {
+      const grid = document.getElementById("games-grid");
+      const filtered = GAMES_DATA.filter((g) => {
+        const matchCat = currentCategory === "all" || g.category === currentCategory;
+        const matchSearch =
+          !globalSearchQuery ||
+          g.title.toLowerCase().includes(globalSearchQuery) ||
+          g.category.toLowerCase().includes(globalSearchQuery);
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-2xl border border-white/10 bg-[#0D233A]/60 p-8 text-center">
+            <p class="font-display text-base font-bold text-white">Game tidak ditemukan</p>
+            <p class="mt-1 text-xs text-slate-400">Gunakan kata kunci pencarian lain.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered
+        .map(
+          (g) => `
+          <div
+            onclick="selectGame('${g.id}')"
+            class="group flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#0D233A]/90 p-5 transition-all duration-200 hover:-translate-y-1 hover:border-[#00A8E8]"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-[#00A8E8]/30 bg-[#0A192F] text-xl text-[#00A8E8] group-hover:border-[#FFB703] group-hover:text-[#FFB703] transition-colors">
+                  <i class="fa-solid ${g.icon}"></i>
+                </div>
+                <span class="text-[11px] font-semibold text-[#FFB703]">${g.badge}</span>
+              </div>
+
+              <p class="mt-4 text-xs text-slate-400">${g.category}</p>
+              <h3 class="mt-0.5 font-display text-lg font-bold text-white group-hover:text-[#00A8E8] transition-colors">
+                ${g.title}
+              </h3>
+              <p class="mt-1 text-xs text-slate-400">${g.publisher}</p>
+            </div>
+
+            <button
+              type="button"
+              onclick="event.stopPropagation(); selectGame('${g.id}')"
+              class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#00A8E8] px-4 py-2.5 text-xs font-bold text-[#0A192F] transition-colors group-hover:bg-[#FFB703]"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Beli</span>
+            </button>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(".cat-tab").forEach((btn) => {
+        if (btn.getAttribute("data-cat") === cat) {
+          btn.className = "cat-tab rounded-lg bg-[#00A8E8] px-3.5 py-2 text-xs font-bold text-[#0A192F] whitespace-nowrap";
+        } else {
+          btn.className = "cat-tab rounded-lg px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white whitespace-nowrap";
+        }
+      });
+      renderGamesCatalog();
+    }
+
+    function handleGlobalSearch(val) {
+      globalSearchQuery = val.trim().toLowerCase();
+      showStep1Catalog();
+      renderGamesCatalog();
+    }
+
+    // ==================== LOGIKA TRANSISI STEP 1 <-> STEP 2 ====================
+    function selectGame(gameId) {
+      const found = GAMES_DATA.find((g) => g.id === gameId);
+      if (!found) return;
+
+      activeGame = found;
+      selectedItemIndex = 0;
+      quantity = 1;
+      document.getElementById("item-search-input").value = "";
+      document.getElementById("checkout-error").classList.add("hidden");
+
+      // Isi informasi header Step 2
+      document.getElementById("detail-game-icon").innerHTML = `<i class="fa-solid ${activeGame.icon}"></i>`;
+      document.getElementById("detail-game-category").textContent = `${activeGame.category} · ${activeGame.publisher}`;
+      document.getElementById("detail-game-title").textContent = activeGame.title;
+      document.getElementById("detail-game-guide").textContent = activeGame.guide;
+
+      // Atur input User ID & Server ID
+      document.getElementById("userid-label").innerHTML = `${activeGame.userIdLabel} <span class="text-[#FFB703]">*</span>`;
+      document.getElementById("input-userid").placeholder = activeGame.userIdPlaceholder;
+
+      const userIdWrapper = document.getElementById("userid-wrapper");
+      const serverIdWrapper = document.getElementById("serverid-wrapper");
+      if (activeGame.needsServerId) {
+        userIdWrapper.className = "";
+        serverIdWrapper.classList.remove("hidden");
+      } else {
+        userIdWrapper.className = "sm:col-span-2";
+        serverIdWrapper.classList.add("hidden");
+      }
+
+      renderGameItems();
+      updateOrderSummary();
+
+      // Sembunyikan Step 1, tampilkan Step 2
+      document.getElementById("step-1-view").classList.add("hidden");
+      document.getElementById("step-2-view").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showStep1Catalog() {
+      document.getElementById("step-2-view").classList.add("hidden");
+      document.getElementById("step-1-view").classList.remove("hidden");
+    }
+
+    function renderGameItems() {
+      const query = document.getElementById("item-search-input").value.trim().toLowerCase();
+      const grid = document.getElementById("items-grid");
+
+      const indexedItems = activeGame.items
+        .map((item, idx) => ({ ...item, originalIndex: idx }))
+        .filter((item) => !query || item.name.toLowerCase().includes(query));
+
+      document.getElementById("items-count").textContent = indexedItems.length;
+
+      if (indexedItems.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-xl border border-white/10 bg-[#0A192F]/60 p-6 text-center text-xs text-slate-400">
+            Item tidak ditemukan.
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = indexedItems
+        .map((item) => {
+          const isSelected = item.originalIndex === selectedItemIndex;
+          return `
+            <button
+              type="button"
+              onclick="chooseItem(${item.originalIndex})"
+              class="flex items-center justify-between gap-3 rounded-xl border p-3.5 text-left transition-all ${
+                isSelected
+                  ? "border-[#FFB703] bg-[#0A192F] ring-1 ring-[#FFB703]"
+                  : "border-white/10 bg-[#0A192F]/70 hover:border-[#00A8E8]/50 hover:bg-[#0A192F]"
+              }"
+            >
+              <div class="min-w-0 flex-1">
+                <p class="truncate font-display text-sm font-bold text-white">${item.name}</p>
+                <p class="mt-1 tabular-nums text-xs font-bold text-[#FFB703]">${formatRupiah(item.price)}</p>
+              </div>
+              <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+                isSelected ? "bg-[#FFB703] text-[#0A192F]" : "border border-white/15 text-transparent"
+              }">
+                <i class="fa-solid fa-check text-xs"></i>
+              </div>
+            </button>
+          `;
+        })
+        .join("");
+    }
+
+    function chooseItem(idx) {
+      selectedItemIndex = idx;
+      renderGameItems();
+      updateOrderSummary();
+    }
+
+    function changeQuantity(delta) {
+      quantity = Math.max(1, Math.min(99, quantity + delta));
+      updateOrderSummary();
+    }
+
+    function updateOrderSummary() {
+      const item = activeGame.items[selectedItemIndex] || activeGame.items[0];
+      const total = item.price * quantity;
+
+      document.getElementById("summary-item-name").textContent = item.name;
+      document.getElementById("summary-qty").textContent = quantity;
+      document.getElementById("summary-game-title").textContent = activeGame.title;
+      document.getElementById("summary-unit-price").textContent = formatRupiah(item.price);
+      document.getElementById("summary-total-price").textContent = formatRupiah(total);
+    }
+
+    // ==================== LOGIKA STEP 3 & STEP 4: MODAL QRIS ====================
+    function openStep3QrisModal() {
+      const userIdVal = document.getElementById("input-userid").value.trim();
+      const serverIdVal = document.getElementById("input-serverid").value.trim();
+      const errEl = document.getElementById("checkout-error");
+
+      if (!userIdVal) {
+        errEl.textContent = `Harap isi ${activeGame.userIdLabel} terlebih dahulu.`;
+        errEl.classList.remove("hidden");
+        document.getElementById("input-userid").focus();
+        return;
+      }
+
+      if (activeGame.needsServerId && !serverIdVal) {
+        errEl.textContent = "Harap isi Server / Zone ID terlebih dahulu.";
+        errEl.classList.remove("hidden");
+        document.getElementById("input-serverid").focus();
+        return;
+      }
+
+      errEl.classList.add("hidden");
+
+      const item = activeGame.items[selectedItemIndex] || activeGame.items[0];
+      const total = item.price * quantity;
+      const invoiceId = "OASIS-" + Math.floor(10000 + Math.random() * 90000);
+
+      document.getElementById("modal-step-badge").textContent = "Step 3 · Pembayaran QRIS";
+      document.getElementById("modal-title").textContent = "Scan QRIS Coding Oasis";
+      document.getElementById("modal-total-amount").textContent = formatRupiah(total);
+      document.getElementById("modal-invoice-id").textContent = invoiceId;
+      document.getElementById("modal-item-summary").textContent = `${item.name} (x${quantity})`;
+      document.getElementById("modal-userid-summary").textContent = activeGame.needsServerId
+        ? `${userIdVal} (${serverIdVal})`
+        : userIdVal;
+
+      document.getElementById("modal-step-3-content").classList.remove("hidden");
+      document.getElementById("modal-step-4-content").classList.add("hidden");
+
+      const modal = document.getElementById("qris-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      startQrisCountdown(900);
+    }
+
+    function startQrisCountdown(durationSeconds) {
+      if (timerInterval) clearInterval(timerInterval);
+      let remaining = durationSeconds;
+      const timerEl = document.getElementById("qris-timer");
+
+      const updateDisplay = () => {
+        const mins = String(Math.floor(remaining / 60)).padStart(2, "0");
+        const secs = String(remaining % 60).padStart(2, "0");
+        timerEl.textContent = `${mins}:${secs}`;
+      };
+
+      updateDisplay();
+      timerInterval = setInterval(() => {
+        if (remaining > 0) {
+          remaining--;
+          updateDisplay();
+        } else {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    }
+
+    function showStep4Confirmation() {
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById("modal-step-badge").textContent = "Step 4 · Konfirmasi Pembayaran";
+      document.getElementById("modal-title").textContent = "Pesanan Diproses";
+      document.getElementById("modal-step-3-content").classList.add("hidden");
+      document.getElementById("modal-step-4-content").classList.remove("hidden");
+    }
+
+    function closeQrisModal() {
+      if (timerInterval) clearInterval(timerInterval);
+      const modal = document.getElementById("qris-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // ==================== LOGIKA MODAL LOGIN ====================
+    function openLoginModal() {
+      const modal = document.getElementById("login-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById("login-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById("login-username").value.trim();
+      if (user) {
+        document.getElementById("auth-btn-text").textContent = user;
+        closeLoginModal();
+      }
+    }
+
+    // Inisialisasi saat halaman dibuka
+    window.addEventListener("DOMContentLoaded", () => {
+      renderGamesCatalog();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Coding Oasis — Toko Digital Game & Item Roblox",
+  "description": "Platform top up game instan dan marketplace item Fisch Roblox terpercaya dengan nuansa tropis Coding Oasis. Pembayaran mudah dan instan via QRIS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
